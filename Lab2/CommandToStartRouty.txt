@@ -1,0 +1,88 @@
+
+%From lab
+r2 ! {add, stockholm, {r1, 'sweden@130.123.112.23'}}.  %From the discussion
+
+(sweden@130.123.112.23)>routy:start(r1, stockholm).
+(sweden@130.123.112.23)>routy:start(r2, lund).
+(sweden@130.123.112.23)>r2 ! {add, stockholm, {r1, ’sweden@130.123.112.23’}}.
+
+
+%%%------Dothis to run the routy test script:
+
+cd Documents/MASTERofSCIENCE/Year2/DistributedSystems/Addi_Labbar/Lab2/
+
+erl -name sweden@130.123.112.23 -setcookie routy -connect_all false
+
+c(routy).
+c(dijkstra).
+c(map).
+c(intf).
+c(hist).
+c(testMyRouty).
+
+testMyRouty:startRoutingNodes('sweden@130.123.112.23').
+
+testMyRouty:broadcast().
+
+testMyRouty:update().
+
+testMyRouty:send().
+
+testMyRouty:remove().
+
+testMyRouty:stop().
+
+
+
+%%%----to send to other terminal
+
+Both terminals:
+cd Documents/MASTERofSCIENCE/Year2/DistributedSystems/Addi_Labbar/Lab2/
+
+
+%1st terminal:
+erl -name sweden@130.123.112.23 -setcookie routy -connect_all false
+
+routy:start(stockholm, sweden).
+
+stockholm ! {add, uk, {london, 'uk@130.123.112.22'}}.
+
+stockholm ! broadcast.
+
+stockholm ! update.
+
+testMyRouty:send().
+
+
+
+2nd terminal:
+erl -name uk@130.123.112.22 -setcookie routy -connect_all false
+
+routy:start(london, uk).
+
+london ! {add, stockholm, {sweden, 'sweden@130.123.112.23'}}.
+
+london ! broadcast.
+
+london ! update.
+
+
+%%
+    send()->
+        stockholm ! {send, uk, "Does sending it via another terminal work? - Stockholm"}.
+        
+        london ! {send, sweden, "Yes, looks like it, just got your text. - London"}.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
