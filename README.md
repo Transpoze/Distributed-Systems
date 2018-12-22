@@ -1,2 +1,2 @@
 # Distributed-Systems
-Cool assignments in distributed systems
+Assignments in distributed systems
